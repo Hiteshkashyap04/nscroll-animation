@@ -1,14 +1,25 @@
 import type { NextConfig } from "next";
 
-const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
-const isGitHubPages = process.env.GITHUB_ACTIONS === "true" && repoName.length > 0;
+const repoName = "nscroll-animation";
 
 const nextConfig: NextConfig = {
   output: "export",
+
   trailingSlash: true,
-  images: { unoptimized: true },
-  basePath: isGitHubPages ? `/${repoName}` : "",
-  assetPrefix: isGitHubPages ? `/${repoName}/` : "",
+
+  basePath:
+    process.env.NODE_ENV === "production"
+      ? `/${repoName}`
+      : "",
+
+  assetPrefix:
+    process.env.NODE_ENV === "production"
+      ? `/${repoName}/`
+      : "",
+
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
